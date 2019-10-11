@@ -1,0 +1,63 @@
+<!--
+
+    User enters new, valid username, valid password, verifies password correctly & redirected to '/newpost' page with username stored in a session.
+    User leaves any of the username, password, or verify fields blank & gets an error message that one or more fields are invalid.
+    User enters a username that already exists and gets an error message that username already exists.
+    User enters different strings into the password and verify fields and gets an error message that the passwords do not match.
+    User enters a password or username less than 3 characters long and gets either an invalid username or an invalid password message.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Form</title>
+        <style>
+            form {
+                background-color: #5a78f0;
+                padding: 20px;
+                margin: 0 auto;
+                width: 540px;
+                font: 16px sans-serif;
+                border-radius: 10px;
+            }
+            textarea {
+                margin: 10px 0;
+                width: 540px;
+                height: 120px;
+            }
+            .error {
+                color: red;
+            }
+        </style>
+    </head>
+    <body>
+    <h1>Signup</h1>
+        <form method="post">
+            <table>
+                <tr>
+                    <td><label for="username">Username</label></td>
+                    <td>
+                        <input name="username" type="text" value="{{username}}">
+                        <span class="error">{{username_error}}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="password">Password</label></td>
+                    <td>
+                        <input name="password" type="password">
+                        <span class="error">{{password_error}}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="verify">Verify Password</label></td>
+                    <td>
+                        <input name="verify" type="password">
+                        <span class="error">{{verify_error}}</span>
+                    </td>
+                </tr>
+            </table>
+            <input type="submit">
+        </form>
+    </body>
+</html>

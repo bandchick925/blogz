@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% with messages = get_flashed_messages(with_categories=True) %}
+        <ul>
+        {% for category,message in messages %}
+            <li class="{{category}}">{{message}}</li>
+        {% endfor %}
+        </ul>
+    {% endwith %}
+
+        <form method="post">
+            <table>
+                <tr>
+                    <td><label for="username">Username</label></td>
+                    <td>
+                        <input name="username" type="text" value="{{username}}">
+                        <span class="error">{{username_error}}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="password">Password</label></td>
+                    <td>
+                        <input name="password" type="password">
+                        <span class="error">{{password_error}}</span>
+                    </td>
+                </tr>
+            </table>
+            <input type="submit" value="Login">
+        </form>
+
+{% endblock %}
+
+<!--
+
+    User enters username stored in database with correct password & redirected to /newpost page with username stored in a session.
+    User enters username stored in database with incorrect password & redirected to /login page with message that password is incorrect.
+    User tries to login with a username not stored in the database & redirected to /login page with message that username does not exist.
+    User does not have an account and clicks "Create Account" and is directed to the /signup page.
+
+-->

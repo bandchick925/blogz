@@ -3,18 +3,21 @@
     <head>
         <title>{{title}}</title>
     </head>
-    <body>
-        <h1>Build-A-Blog</h1>
+<body>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/newpost">New Post</a>
+        <a href="/blog">Blog</a>
+        <a href="/signup">Sign Up</a>
+        <a href="/login">Login</a>
+        <a href="/logout">Logout</a>
 
-        <nav>
-            <a href='/blog'>View Blog</a> |
-            <a href='/newpost'>New Post</a>
-        </nav>
+    </nav>
 
-        <hr />
 
-        {% block content %}
-        {% endblock %}
 
-    </body>
+    {% block content %}
+    {% endblock %}
+
+</body>
 </html>

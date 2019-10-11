@@ -2,19 +2,6 @@
 
 {% block content %}
 
-<!--
-    <h1>Insert Blog Title Here</h1>
-    <form method='post'>
-        <label>
-            New Task:
-            <input type="text" name='task' />
-        </label>
-        <input type="submit" value='Add Task' />
-    </form>
-
-    <hr />
--->
-
 {% if posts|length == 0 %}
     <p>No Posts yet</p>
     {% else %}
@@ -32,3 +19,4 @@
 
 
 {% endblock %}
+
