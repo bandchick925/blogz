@@ -15,17 +15,21 @@ app.config['SQLALCHEMY_ECHO'] = True
 app.secret_key = 'y337kGcys&zP3B'
 db = SQLAlchemy(app)
 
+links = {'login': '<a href="/login">Login</a>', 'logout': '<a href="/logout">Logout</a>'}
+
 
 class Blog(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(120))
     body = db.Column(db.Text)
+    author = db.Column(db.String(120))
     owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     stamp = db.Column(db.DateTime)
 
-    def __init__(self, title, body, owner, stamp):
+    def __init__(self, title, body, author, owner, stamp):
         self.title = title
         self.body = body
+        self.author = author
         self.owner = owner
         self.stamp = stamp
 
@@ -80,7 +84,8 @@ def index():
     username = 'Blog Buddy'
     if 'username' in session.keys():
         username = session['username']
-    return template.render(username=username)
+    users = User.query.all()
+    return template.render(username=username, users=users)
 
 
 @app.route('/signup', methods=['GET', 'POST'])
@@ -165,12 +170,11 @@ def blog():
         posts = [post]
         return template.render(posts=posts, title=post.title)
 
-    elif 'user' in request.args.keys():
-        uid = request.args.get('user')
-        user = User.query.get(id=uid)
-        posts = Blog.query.filter_by(owner=user).all()
+    elif 'username' in request.args.keys():
+        username = request.args.get('username')
+        posts = Blog.query.filter_by(author=username).all()
         template = jinja_env.get_template('singleUser.html')
-        return template.render(posts=posts, title='Posts by {}'.format(user.username))
+        return template.render(posts=posts, title='Posts by {}'.format(username))
 
     else:
         posts = Blog.query.order_by(desc(Blog.id)).all()
@@ -208,7 +212,7 @@ def newpost():
             username = session['username']
             stamp = datetime.datetime.now()
             owner = User.query.filter_by(username=username).first()
-            new = Blog(title=title, body=body, owner=owner, stamp=stamp)
+            new = Blog(title=title, body=body, author=username, owner=owner, stamp=stamp)
             db.session.add(new)
             db.session.commit()
             return redirect('/blog?id={}'.format(new.id))
